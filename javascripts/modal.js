@@ -31,13 +31,15 @@ $(function () {
     let name = event.currentTarget.firstElementChild.getAttribute("alt");
     let current = team.filter((ele) => ele.name === name);
 
-    let modal = modalRenderer(current[0]);
+    let modal = $(modalRenderer(current[0])).hide(); // TIL that jQuery will take an HTML string and create DOM elements out of them, which it will then encapsulate in its jQuery collection
     $("body").prepend(modal);
+    modal.fadeIn();
 
     $("a.close").on("click", (event) => {
       event.preventDefault();
-      let modals = $('div[class^="modal"]');
-      modals.remove();
+      modal.fadeOut(400, () => {
+        modal.remove();
+      });
     });
   });
 });
